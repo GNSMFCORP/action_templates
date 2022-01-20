@@ -1,0 +1,53 @@
+---
+name: Terraform Destroy
+
+on:
+  workflow_call:
+    secrets:
+        AWS_ACCESS_KEY_ID:
+            required: true
+        AWS_SECRET_ACCESS_KEY:
+            required: true
+        TF_API_TOKEN:
+            required: true
+
+jobs:
+  terraform:
+    name: "Terraform DESTROY"
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Set Environment
+      run: echo ENVPATH=infra/deveast >> $GITHUB_ENV
+    - name: Set Environment if PRD
+      if: github.ref == 'refs/heads/main'
+      run: echo ENVPATH=infra/prdeast >> $GITHUB_ENV
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Check
+      id: CHK
+      run: echo "TF Version is $(terraform version)"
+
+    - name: Terraform Init
+      id: init
+      working-directory: ${{env.ENVPATH}}
+      run: terraform init
+
+    - name: Terraform DESTROY
+      id: destroy
+      working-directory: ${{env.ENVPATH}}
+      run: terraform destroy -auto-approve
