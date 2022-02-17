@@ -3,6 +3,10 @@ name: Docker
 
 on:
   workflow_call:
+    inputs:
+      ECR_REPO:
+        required: false
+        type: string
     secrets:
         AWS_ACCESS_KEY_ID:
             description: "access key"
@@ -45,8 +49,8 @@ jobs:
       - name: Set Repo Name
         id: WriteRepoName
         run: |
-          echo "${ECR_REPO}"
-          if [ "${ECR_REPO}" == "" ]; then
+          echo "${{ inputs.ECR_REPO }}"
+          if [ "${{ inputs.ECR_REPO }}" == "" ]; then
               echo "REPOSITORY_NAME=$(echo ${{github.repository}}" >> $GITHUB_ENV
           else
               echo "REPOSITORY_NAME=$(echo ${ECR_REPO}" >> $GITHUB_ENV
