@@ -50,10 +50,10 @@ jobs:
         id: WriteRepoName
         run: |
           echo "${{ inputs.ECR_REPO }}"
-          if [ -z "${{ inputs.ECR_REPO }}" ]; then
+          if [ -n "${{ inputs.ECR_REPO }}" ]; then
               echo "REPOSITORY_NAME=${{ inputs.ECR_REPO }}" >> $GITHUB_ENV
           else
-              echo "REPOSITORY_NAME=$(echo ${{github.repository}}" >> $GITHUB_ENV
+              echo "REPOSITORY_NAME=$(echo ${{ github.event.repository.name }}" >> $GITHUB_ENV
           fi
 
       - name: Set Image Tag
