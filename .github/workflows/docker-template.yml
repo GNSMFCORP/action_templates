@@ -53,7 +53,7 @@ jobs:
           if [ -n "${{ inputs.ECR_REPO }}" ]; then
               echo "REPOSITORY_NAME=${{ inputs.ECR_REPO }}" >> $GITHUB_ENV
           else
-              echo "REPOSITORY_NAME=$(echo ${{ github.event.repository.name }}" >> $GITHUB_ENV
+              echo "REPOSITORY_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
           fi
 
       - name: Set Image Tag
