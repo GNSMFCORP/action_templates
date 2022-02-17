@@ -50,7 +50,15 @@ jobs:
           else
               echo "REPOSITORY_NAME=$(echo ${ECR_REPO}" >> $GITHUB_ENV
           fi
-          echo IMAGE_TAG="${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_ENV
+
+      - name: Set Image Tag
+        id: WriteImageTag
+        run: |
+          if [[ ${{ steps.branch-name.outputs.current_branch }} == "master" ]]; then
+              echo IMAGE_TAG="dev" >> $GITHUB_ENV
+          else
+              echo IMAGE_TAG="${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_ENV
+          fi
 
       - name: Enable Docker Squash
         id: Docker_Squash
