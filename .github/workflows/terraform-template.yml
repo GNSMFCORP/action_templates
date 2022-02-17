@@ -5,10 +5,13 @@ on:
   workflow_call:
     secrets:
         AWS_ACCESS_KEY_ID:
+            description: "access key"
             required: true
         AWS_SECRET_ACCESS_KEY:
+            description: "secret key"
             required: true
         TF_API_TOKEN:
+            description: "TFC Token"
             required: true
 
 jobs:
@@ -36,7 +39,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Set Environment
-        run: echo ENVPATH=infra/"${{ steps.branch-name.outputs.current_branch }}"east >> $GITHUB_ENV
+        run: echo "ENVPATH=infra/${{ steps.branch-name.outputs.current_branch }}east" >> $GITHUB_ENV
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
