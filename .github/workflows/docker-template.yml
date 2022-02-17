@@ -45,7 +45,8 @@ jobs:
       - name: Set Repo Name
         id: WriteRepoName
         run: |
-          if [[ ${ECR_REPO} == "" ]]; then
+          echo "${ECR_REPO}"
+          if [ "${ECR_REPO}" == "" ]; then
               echo "REPOSITORY_NAME=$(echo ${{github.repository}}" >> $GITHUB_ENV
           else
               echo "REPOSITORY_NAME=$(echo ${ECR_REPO}" >> $GITHUB_ENV
