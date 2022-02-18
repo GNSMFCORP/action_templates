@@ -43,7 +43,7 @@ jobs:
         run: echo "ENVPATH=infra/${{ steps.branch-name.outputs.current_branch }}east" >> $GITHUB_ENV
       - name: Set Environment Test
         id: Set_Path_Test
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/OBE-627-triumph-docker-setup'
         run: echo "ENVPATH=infra/deveast" >> $GITHUB_ENV
 
       - name: Setup Terraform
