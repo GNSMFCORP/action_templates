@@ -59,7 +59,7 @@ jobs:
       - name: Set Image Tag
         id: WriteImageTag
         run: |
-          if [[ ${{ steps.branch-name.outputs.current_branch }} == "OBE-627-triumph-docker-setup" ]]; then
+          if [[ ${{ steps.branch-name.outputs.current_branch }} == "OBE-627_triumph_docker_setup" ]]; then
               echo IMAGE_TAG="dev" >> $GITHUB_ENV
           else
               echo IMAGE_TAG="${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_ENV
