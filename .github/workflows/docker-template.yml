@@ -59,11 +59,13 @@ jobs:
       - name: Set Image Tag
         id: WriteImageTag
         run: |
-          if [[ ${{ steps.branch-name.outputs.current_branch }} == "OBE-627_triumph_docker_setup" ]]; then
-              echo IMAGE_TAG="dev" >> $GITHUB_ENV
-          else
-              echo IMAGE_TAG="${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_ENV
-          fi
+            if [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-production" ]]; then
+                echo IMAGE_TAG="latest" >> $GITHUB_ENV
+            elif [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-staging" ]]; then
+                echo IMAGE_TAG="stg" >> $GITHUB_ENV
+            else
+                echo IMAGE_TAG="dev" >> $GITHUB_ENV
+            fi
 
       - name: Enable Docker Squash
         id: Docker_Squash

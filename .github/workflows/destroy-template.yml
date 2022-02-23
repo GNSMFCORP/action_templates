@@ -40,11 +40,14 @@ jobs:
 
       - name: Set Environment
         id: Set_Path
-        run: echo "ENVPATH=infra/${{ steps.branch-name.outputs.current_branch }}east" >> $GITHUB_ENV
-      - name: Set Environment Test
-        id: Set_Path_Test
-        if: github.ref == 'refs/heads/OBE-627_triumph_docker_setup'
-        run: echo "ENVPATH=infra/deveast" >> $GITHUB_ENV
+        run: |
+            if [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-production" ]]; then
+                echo "ENVPATH=infra/prdeast" >> $GITHUB_ENV
+            elif [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-staging" ]]; then
+                echo "ENVPATH=infra/stgeast" >> $GITHUB_ENV
+            else
+                echo "ENVPATH=infra/deveast" >> $GITHUB_ENV
+            fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
