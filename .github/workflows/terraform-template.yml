@@ -41,6 +41,7 @@ jobs:
       - name: Set Environment
         id: Set_Path
         run: |
+            echo ${{ steps.branch-name.outputs.current_branch }}
             if [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-production" ]]; then
                 echo "ENVPATH=infra/prdeast" >> $GITHUB_ENV
             elif [[ ${{ steps.branch-name.outputs.current_branch }} == "6.0-staging" ]]; then
